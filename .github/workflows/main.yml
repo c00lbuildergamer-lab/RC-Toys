@@ -1,0 +1,22 @@
+name: Build 26.3 Mod
+on: [workflow_dispatch, push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 26
+        uses: actions/setup-java@v4
+        with:
+          java-version: '26'
+          distribution: 'oracle'
+      - name: Build with Gradle
+        run: |
+          chmod +x gradlew
+          ./gradlew build
+      - name: Upload Mod Jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: RC-Toys-26.3-Mod
+          path: build/libs/*.jar
